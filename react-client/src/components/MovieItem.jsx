@@ -17,12 +17,14 @@ const MovieItem = (props) => (
       </div>
       <div className="video-list-entry-detail col s7">{ props.movie.overview }</div>
     </div>
-    <div className="video-list-entry media row">
+    <div className="friends-list-entry media">
       {props.movie.friends.map((friend) => {
         console.log(friend);
-        <div className="row">
-          <FriendsList friend={friend}/>
-        </div>
+        return (
+          <div className="row">
+            <FriendsList friend={friend}/>
+          </div>
+        )
       })}
     </div>
   </div>

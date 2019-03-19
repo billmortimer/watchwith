@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import axios from 'axios';
 import $ from 'jquery';
-import SearchBox from './components/Search.jsx';
+//import SearchBox from './components/Search.jsx';
 import MovieList from './components/MovieList.jsx';
 import fakeMovies from '../../fakeMovies.js';
 import TMDB_API_KEY from '../../.env/tmdb_key.js';
@@ -22,7 +22,6 @@ class App extends React.Component {
     //console.log('In componentDidMount');
     this.fetchMoviesFromDB();
     //this.fetchMovieID(157336);
-  
   }
 
   render () {
@@ -39,7 +38,6 @@ class App extends React.Component {
     // GET the movies from the DB and update the state
     axios({ method: 'get', url: '/api/movies'})
     .then(res => {
-      //console.log(res.data);
       this.setState({
         movies: res.data
       })
