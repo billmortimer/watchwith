@@ -14,15 +14,15 @@ var friendSchema = mongoose.Schema({
 
 var Friend = mongoose.model('Friend', friendSchema);
 
-// var selectAll = function(callback) {
-//   Friend.find({}, function(err, items) {
-//     if(err) {
-//       callback(err, null);
-//     } else {
-//       callback(null, items);
-//     }
-//   });
-// };
+var selectAll = function(callback) {
+  Friend.find({}, function(err, items) {
+    if(err) {
+      callback(err, null);
+    } else {
+      callback(null, items);
+    }
+  });
+};
 
 module.exports = Friend;
-// module.exports.selectAll = selectAll;
+module.exports.selectAll = selectAll;

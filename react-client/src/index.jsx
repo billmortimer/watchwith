@@ -11,17 +11,64 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = { 
-      movies: []
+      movies: [],
+      friends: []
     }
     this.fetchApi = this.fetchApi.bind(this);
     this.fetchMovieID = this.fetchMovieID.bind(this);
     this.fetchMoviesFromDB = this.fetchMoviesFromDB.bind(this);
+    this.fetchFriendsFromDB = this.fetchFriendsFromDB.bind(this);
+    this.getSearchResults= this.getSearchResults.bind(this);
   }
+
+  getSearchResults(that) {
+    jQuery(document).ready(function($){
+      // Set up search of tmdb
+      let options = {
+        placeholder: 'Type a movie name',
+        url: function(phrase) { 
+          console.log(phrase);
+          let queryStr = `https://api.themoviedb.org/3/search/movie?api_key=${TMDB_API_KEY}&query=${phrase}&include_adult=false`;
+          return queryStr;
+        },
+        getValue: function(element) {
+          return element.title + ' (' + element.release_date.slice(0,4) +')';
+        },
+        template: {
+          type: "custom",
+          method: function(value, item) {
+            let customStr = `<img class="search-thumb" src="https://image.tmdb.org/t/p/w500${item.poster_path}" /> ${item.title} (${item.release_date.slice(0,4)})`
+            return customStr;
+          }
+        },
+        list: {
+          onChooseEvent:  function() {
+            let movieId = $("#autocomplete-tmdb").getSelectedItemData().id;
+            console.log(movieId);
+            console.log(that);
+            that.fetchMovieID(movieId).bind(that);
+          }
+        },
+        ajaxSettings: {
+            dataType: "json"
+        },
+        cssClasses: "movieSearch",
+        listLocation: "results",
+        requestDelay: 500,
+        theme: "round"
+      };
+    
+      $("#autocomplete-tmdb").easyAutocomplete(options);
+    
+    });
+   }
 
   componentDidMount() {
     //console.log('In componentDidMount');
     this.fetchMoviesFromDB();
     //this.fetchMovieID(157336);
+    this.getSearchResults(this);
+    //this.fetchMovieID(movieNum);   
   }
 
   render () {
@@ -33,6 +80,16 @@ class App extends React.Component {
   }
   // <SearchBox fetchMovieID={this.fetchMovieID.bind(this)}/>
 
+  fetchFriendsFromDB() {
+    // GET the friends from the DB and update the state
+    axios({ method: 'get', url: '/api/friends'})
+    .then(res => {
+      this.setState({
+        friends: res.data
+      })
+    })
+    .catch(err => console.log(err));
+  }
 
   fetchMoviesFromDB() {
     // GET the movies from the DB and update the state
@@ -78,46 +135,7 @@ class App extends React.Component {
 
 }
 
-jQuery(document).ready(function($){
-  // Set up search of tmdb
-  let options = {
-    placeholder: 'Type a movie name',
-    url: function(phrase) { 
-      console.log(phrase);
-      let queryStr = `https://api.themoviedb.org/3/search/movie?api_key=${TMDB_API_KEY}&query=${phrase}&include_adult=false`;
-      return queryStr;
-    },
-    getValue: function(element) {
-      return element.title + ' (' + element.release_date.slice(0,4) +')';
-    },
-    template: {
-      type: "custom",
-      method: function(value, item) {
-        let customStr = `<img class="search-thumb" src="https://image.tmdb.org/t/p/w500${item.poster_path}" /> ${item.title} (${item.release_date.slice(0,4)})`
-        return customStr;
-      }
-    },
-    list: {
-      onChooseEvent: function() {
-        let movieId = $("#autocomplete-tmdb").getSelectedItemData().id;
-        console.log(movieId);
-        // how can I pass this to App?
-        //console.log(App.props);
-        //App.fetchMovieID(movieId);
-      }
-    },
-    ajaxSettings: {
-        dataType: "json"
-    },
-    cssClasses: "movieSearch",
-    listLocation: "results",
-    requestDelay: 500,
-    theme: "round"
-  };
 
-  $("#autocomplete-tmdb").easyAutocomplete(options);
-
-});
 
 
 ReactDOM.render(<App />, document.getElementById('app'));

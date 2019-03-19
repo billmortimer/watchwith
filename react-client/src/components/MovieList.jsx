@@ -5,7 +5,7 @@ import MovieItem from './MovieItem.jsx';
 const MovieList = (props) => (
   <div>
     { props.movies.map(movie => 
-      <div>
+      <div className="movie-item">
       <MovieItem key={movie.id} movie={movie}/>
       </div>
     )}

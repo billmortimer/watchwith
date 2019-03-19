@@ -20,7 +20,7 @@ var movieSchema = mongoose.Schema({
 var Movie = mongoose.model('Movie', movieSchema);
 
 var selectAll = function(callback) {
-  Movie.find({}, function(err, items) {
+  Movie.find().sort('-createdAt').exec(function(err, items) {
     if(err) {
       callback(err, null);
     } else {

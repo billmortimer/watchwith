@@ -1,29 +1,24 @@
 import React from 'react';
 
 const FriendsList = (props) => (
-  <div className="video-list-entry media row">
-    <div className="media-left media-middle col s4">
-      <img className="media-object" src="https://m.media-amazon.com/images/M/MV5BMTUzMzUzMDg5MV5BMl5BanBnXkFtZTcwMDA5NDMwNA@@._V1_UY317_CR4,0,214,317_AL_.jpg" alt=""/>
+  <div className="friend-list-entry media row center-align">
+    <div className="media-left media-middle">
+      <img className="friend-media-object circle"  src={props.friend.pic_url} alt={props.friend.name}/>
     </div>
-    <div className="media-body col s8">
+    <div className="media-body row center-align">
       <div 
-        className="video-list-entry-title" 
+        className="friend-list-entry-title center-align" 
         onClick={() => console.log('name clicked')}
       >
-        Tyler Durden
+        {props.friend.name}
       </div>
     </div>
   </div>
 )
 
-//<div className="video-list-entry-detail col s7">{ props.movie.overview }</div>
-// {props.friend.pic_url}
-// {props.friend.name}
-// { props.friend.name }
-
 export default FriendsList;
 
 
-{/* <a href="#!" class="waves-effect waves-circle waves-light btn-floating secondary-content">
+/* <a href="#!" class="waves-effect waves-circle waves-light btn-floating secondary-content">
 <i class="material-icons">add</i>
-</a> */}
+</a> */
