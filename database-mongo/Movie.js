@@ -10,6 +10,7 @@ var movieSchema = mongoose.Schema({
   overview: String,
   poster_path: String,
   release_date: String,
+  friends: Array
 },
 {
   timestamps: true

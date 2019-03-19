@@ -1,10 +1,9 @@
 const mongoose = require('mongoose');
 const db = require('./index.js');
-mongoose.Promise = global.Promise;
 
 var friendSchema = mongoose.Schema({
   name: String,
-  email: String,
+  email: { type: String, index: { unique: true } },
   phone: String,
   pic_url: String,
 },

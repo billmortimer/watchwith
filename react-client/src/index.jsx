@@ -22,12 +22,13 @@ class App extends React.Component {
     //console.log('In componentDidMount');
     this.fetchMoviesFromDB();
     //this.fetchMovieID(157336);
+  
   }
 
   render () {
     return (
     <div>
-      <input id="autocomplete-tmdb"/>
+      <input ref="movieSearch" id="autocomplete-tmdb"/>
       <MovieList movies={this.state.movies}/>
     </div>)
   }
@@ -87,16 +88,7 @@ jQuery(document).ready(function($){
       console.log(phrase);
       let queryStr = `https://api.themoviedb.org/3/search/movie?api_key=${TMDB_API_KEY}&query=${phrase}&include_adult=false`;
       return queryStr;
-        // if (phrase !== "") {
-        //     return `"https://api.themoviedb.org/3/search/movie?query=${phrase}&api_key=${TMDB_API_KEY}"`
-        //     //return "http://api.duckduckgo.com/?q=" + phrase + "&format=json";    
-        // } else {
-        //   return `"https://api.themoviedb.org/3/search/movie?query=${phrase}&api_key=${TMDB_API_KEY}"`
-        //     //duckduckgo doesn't support empty strings
-        //     //return "http://api.duckduckgo.com/?q=empty&format=json";
-        // }
     },
-    //getValue: "title",
     getValue: function(element) {
       return element.title + ' (' + element.release_date.slice(0,4) +')';
     },
@@ -107,22 +99,19 @@ jQuery(document).ready(function($){
         return customStr;
       }
     },
-    // list: {
-    //   onChooseEvent: function() {
-    //     console.log(list);
-    //   }	
-    // },
     list: {
       onChooseEvent: function() {
         let movieId = $("#autocomplete-tmdb").getSelectedItemData().id;
         console.log(movieId);
-        console.log(App);
-        App.fetchMovieID(movieId);
+        // how can I pass this to App?
+        //console.log(App.props);
+        //App.fetchMovieID(movieId);
       }
     },
     ajaxSettings: {
         dataType: "json"
     },
+    cssClasses: "movieSearch",
     listLocation: "results",
     requestDelay: 500,
     theme: "round"
@@ -131,5 +120,6 @@ jQuery(document).ready(function($){
   $("#autocomplete-tmdb").easyAutocomplete(options);
 
 });
+
 
 ReactDOM.render(<App />, document.getElementById('app'));

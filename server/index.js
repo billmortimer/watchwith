@@ -36,7 +36,7 @@ app.post('/api/movies', (req, res) => {
 app.delete('/api/movies/:id', (req, res) => {
   console.log('Delete - /movies/id');
   let movieId = req.params.id;
-  if (movieID) {
+  if (movieId) {
     Movie.deleteOne({ id: movieId })
     .then(removed => res.json(removed))
     .catch(err => console.log(err));
