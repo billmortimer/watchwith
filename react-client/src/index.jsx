@@ -23,6 +23,8 @@ class App extends React.Component {
 
   getSearchResults(that) {
     jQuery(document).ready(function($){
+      //Initialize the collapsible
+      $('.collapsible').collapsible();
       // Set up search of tmdb
       let options = {
         placeholder: 'Type a movie name',
@@ -67,6 +69,7 @@ class App extends React.Component {
     //console.log('In componentDidMount');
     this.fetchMoviesFromDB();
     //this.fetchMovieID(157336);
+    this.fetchFriendsFromDB();
     this.getSearchResults(this);
     //this.fetchMovieID(movieNum);   
   }
@@ -75,7 +78,7 @@ class App extends React.Component {
     return (
     <div>
       <input ref="movieSearch" id="autocomplete-tmdb"/>
-      <MovieList movies={this.state.movies}/>
+      <MovieList movies={this.state.movies} friends={this.state.friends}/>
     </div>)
   }
   // <SearchBox fetchMovieID={this.fetchMovieID.bind(this)}/>

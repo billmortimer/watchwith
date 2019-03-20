@@ -1,5 +1,6 @@
 import React from 'react';
 import FriendsList from './FriendsList.jsx';
+import FriendsChips from './FriendsChips.jsx';
 
 const MovieItem = (props) => (
   <div>
@@ -28,6 +29,18 @@ const MovieItem = (props) => (
         )
       })}
     </div>
+    <ul className="collapsible">
+    <li>
+      <div className="collapsible-header"> + Add Friends</div>
+      <div className="collapsible-body">
+        <span>
+          <div className="add-friend-item">
+            <FriendsChips movie={props.movie} friends={props.friends}/>
+          </div>
+        </span>
+      </div>
+    </li>
+  </ul>
   </div>
 )
 
